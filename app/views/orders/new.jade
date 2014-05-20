@@ -1,0 +1,18 @@
+extends ../shared/template
+
+block content
+  h1= title
+
+  #user
+    h1= user.email
+  form#order
+    input(type='number', name='qty')
+    select(name='menu')
+      option Select from Menu
+      each item in menuItems
+        option #{item}
+    select(name='dish')
+      option Select a Dish
+
+  div
+    button#add Add Row
