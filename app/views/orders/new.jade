@@ -5,14 +5,23 @@ block content
 
   #user
     h1= user.email
-  form#order
-    input(type='number', name='qty')
-    select(name='menu')
-      option Select from Menu
-      each item in menuItems
-        option #{item}
-    select(name='dish')
-      option Select a Dish
+  #total
+    #dollars $0.00
+    #calories 0
+  form#order(action='/orders', method='POST')
+    .menu-item
+      input(type='number', name='qty')
+      select.menu
+        option Select from Menu
+        each item in menuItems
+          option #{item}
+      select.dish(name='dishId')
+        option Select a Dish
+      button.button.button-small.button-caution.deleteRow Delete
+    button.button.button-action Submit
 
   div
     button#add Add Row
+
+block scripts
+  script(src='/js/es6/compiled/orders.js')

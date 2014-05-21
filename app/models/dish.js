@@ -11,6 +11,12 @@ class Dish{
     });
   }
 
+  static findByMenu(menu, fn){
+    dishes.find({menu:menu}).toArray((e, records)=>{
+      fn(records);
+    });
+  }
+
   static menu(fn){
     Dish.findAll(dishes=>{
       var menus = _.uniq(dishes.map(d=>d.menu));
