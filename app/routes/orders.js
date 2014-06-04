@@ -4,6 +4,7 @@
 var traceur = require('traceur');
 var Dish = traceur.require(__dirname + '/../models/dish.js');
 var User = traceur.require(__dirname + '/../models/user.js');
+var Order = traceur.require(__dirname + '/../models/order.js');
 var _ = require('lodash');
 
 exports.new = (req, res)=>{
@@ -15,5 +16,19 @@ exports.new = (req, res)=>{
 };
 
 exports.create = (req, res)=>{
-  console.log(req.body);
+  var dishObjs = [];
+  for(var i=0; i < req.body.qty.length; i++){
+    var tempObj = {};
+    tempObj.qty = req.body.qty[i];
+    tempObj.dishId = req.body.dishId[i];
+    dishObjs.push(tempObj);
+  }
+
+  var order = new Order(req.session.userId, dishObjs);
+  order.totalCost((newOrder)=>{
+    newOrder.totalCalories((newOrder2)=>{
+      order = newOrder2;
+      order.save(()=>res.redirect('/orders'));
+    });
+  });
 };

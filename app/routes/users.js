@@ -19,3 +19,7 @@ exports.login = (req, res)=>{
     res.redirect('/');
   });
 };
+
+exports.history = (req, res)=>{
+
+};
